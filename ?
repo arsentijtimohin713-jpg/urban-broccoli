@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mafia Economy | Донат магазин</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <h1>⚔️ MAFIA ECONOMY ⚔️</h1>
+                <p>Сервер Minecraft | Донат магазин с оплатой Telegram Stars ⭐</p>
+            </div>
+            <div class="server-info">
+                <div class="ip-box">
+                    <span>🌐 IP сервера:</span>
+                    <code id="server-ip">mafia.aternos.me</code>
+                    <button onclick="copyIP()" class="copy-btn"><i class="fas fa-copy"></i> Копировать</button>
+                </div>
+                <div class="online-status">
+                    <span class="status-dot"></span>
+                    <span id="online-count">Загрузка...</span> игроков онлайн
+                </div>
+            </div>
+        </header>
+
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="balance-info">
+                <h3><i class="fas fa-coins"></i> Твой баланс</h3>
+                <div class="balance-amount">
+                    <span id="player-coins">0</span>
+                    <span class="currency">монет</span>
+                </div>
+                <div class="rank-badge" id="player-rank">
+                    <span><i class="fas fa-trophy"></i> Ранг: Без ранга</span>
+                </div>
+            </div>
+            <div class="nick-input">
+                <input type="text" id="player-nick" placeholder="Введи свой ник" maxlength="16">
+                <button onclick="loadPlayerData()" class="load-btn"><i class="fas fa-search"></i> Загрузить</button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <button class="category-btn active" onclick="showCategory('ranks')">
+                <i class="fas fa-crown"></i> Ранги
+            </button>
+            <button class="category-btn" onclick="showCategory('keys')">
+                <i class="fas fa-key"></i> Ключи
+            </button>
+            <button class="category-btn" onclick="showCategory('kits')">
+                <i class="fas fa-box-open"></i> Киты
+            </button>
+        </div>
+
+        <!-- RANKS CATEGORY -->
+        <div id="ranks-category" class="category active">
+            <h2 class="section-title"><i class="fas fa-crown"></i> Привилегии</h2>
+            <div class="products-grid">
+                <!-- HELPER -->
+                <div class="product-card helper">
+                    <div class="product-icon">💎</div>
+                    <h3>HELPER</h3>
+                    <div class="price">10 ₽ <span class="stars-price">(13 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Цветной ник [HELPER]</li>
+                        <li><i class="fas fa-check-circle"></i> /fly 15 мин/день</li>
+                        <li><i class="fas fa-check-circle"></i> 500 монет/день</li>
+                        <li><i class="fas fa-check-circle"></i> /hat</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyRank('helper', 10, 13)">
+                        <i class="fab fa-telegram"></i> Купить за 13 ⭐
+                    </button>
+                </div>
+
+                <!-- VIP -->
+                <div class="product-card vip">
+                    <div class="product-icon">👑</div>
+                    <h3>VIP</h3>
+                    <div class="price">50 ₽ <span class="stars-p
+
+
+rice">(65 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Цветной ник [VIP]</li>
+                        <li><i class="fas fa-check-circle"></i> /fly 30 мин/день</li>
+                        <li><i class="fas fa-check-circle"></i> 1500 монет/день</li>
+                        <li><i class="fas fa-check-circle"></i> /back + Сила I</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyRank('vip', 50, 65)">
+                        <i class="fab fa-telegram"></i> Купить за 65 ⭐
+                    </button>
+                </div>
+
+                <!-- MVP -->
+                <div class="product-card mvp">
+                    <div class="product-icon">⭐</div>
+                    <h3>MVP</h3>
+                    <div class="price">100 ₽ <span class="stars-price">(130 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Цветной ник [MVP]</li>
+                        <li><i class="fas fa-check-circle"></i> /fly 1 час/день</li>
+                        <li><i class="fas fa-check-circle"></i> 3000 монет/день</li>
+                        <li><i class="fas fa-check-circle"></i> /tpa + Сила II</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyRank('mvp', 100, 130)">
+                        <i class="fab fa-telegram"></i> Купить за 130 ⭐
+                    </button>
+                </div>
+
+                <!-- LEGEND -->
+                <div class="product-card legend">
+                    <div class="product-icon">🏆</div>
+                    <h3>LEGEND</h3>
+                    <div class="price">250 ₽ <span class="stars-price">(325 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Цветной ник [LEGEND]</li>
+                        <li><i class="fas fa-check-circle"></i> /fly 2 часа/день</li>
+                        <li><i class="fas fa-check-circle"></i> 5000 монет/день</li>
+                        <li><i class="fas fa-check-circle"></i> 2 дома + Сила III</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyRank('legend', 250, 325)">
+                        <i class="fab fa-telegram"></i> Купить за 325 ⭐
+                    </button>
+                </div>
+
+                <!-- GOD -->
+                <div class="product-card god">
+                    <div class="product-icon">⚡</div>
+                    <h3>GOD</h3>
+                    <div class="price">500 ₽ <span class="stars-price">(650 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Цветной ник [GOD]</li>
+                        <li><i class="fas fa-check-circle"></i> /fly безлимит</li>
+                        <li><i class="fas fa-check-circle"></i> 10000 монет/день</li>
+                        <li><i class="fas fa-check-circle"></i> Все киты + Сила V</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyRank('god', 500, 650)">
+                        <i class="fab fa-telegram"></i> Купить за 650 ⭐
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEYS CATEGORY -->
+        <div id="keys-category" class="category">
+            <h2 class="section-title"><i class="fas fa-key"></i> Ключи для кейсов</h2>
+            <div class="products-grid">
+                <div class="product-card key-card">
+                    <div class="product-icon">🎁</div>
+                    <h3>1 КЛЮЧ</h3>
+                    <div class="price">10 ₽ <span class="stars-price">(13 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-gift"></i> Открывает 1 обычный кейс</li>
+                        <li><i class="fas fa-dice"></i> Шанс на редкий лут</li>
+                        <li><i class="fas fa-c
+
+
+oins"></i> Монеты от 50 до 5000</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKey('key_1', 10, 13, 1)">
+                        <i class="fab fa-telegram"></i> Купить за 13 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card key-card">
+                    <div class="product-icon">🎁🎁</div>
+                    <h3>5 КЛЮЧЕЙ</h3>
+                    <div class="price">45 ₽ <span class="stars-price">(59 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-gift"></i> 5 обычных кейсов</li>
+                        <li><i class="fas fa-tag"></i> Экономия 5 рублей!</li>
+                        <li><i class="fas fa-gem"></i> Гарантированный редкий лут</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKey('key_5', 45, 59, 5)">
+                        <i class="fab fa-telegram"></i> Купить за 59 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card key-card">
+                    <div class="product-icon">🎁🎁🎁</div>
+                    <h3>10 КЛЮЧЕЙ</h3>
+                    <div class="price">80 ₽ <span class="stars-price">(104 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-gift"></i> 10 обычных кейсов</li>
+                        <li><i class="fas fa-tag"></i> Экономия 20 рублей!</li>
+                        <li><i class="fas fa-fire"></i> Гарантированный легендарный лут</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKey('key_10', 80, 104, 10)">
+                        <i class="fab fa-telegram"></i> Купить за 104 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card key-card legendary">
+                    <div class="product-icon">✨</div>
+                    <h3>ЛЕГЕНДАРНЫЙ КЛЮЧ</h3>
+                    <div class="price">100 ₽ <span class="stars-price">(130 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-gem"></i> Открывает легендарный кейс</li>
+                        <li><i class="fas fa-fire"></i> Гарантированный легендарный лут</li>
+                        <li><i class="fas fa-coins"></i> Незеритовый меч + 5000 монет</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKey('legendary_key', 100, 130, 1)">
+                        <i class="fab fa-telegram"></i> Купить за 130 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card key-card vip">
+                    <div class="product-icon">💎</div>
+                    <h3>VIP КЛЮЧ</h3>
+                    <div class="price">250 ₽ <span class="stars-price">(325 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-crown"></i> Открывает VIP-кейс</li>
+                        <li><i class="fas fa-star"></i> Только для VIP+</li>
+                        <li><i class="fas fa-shield-alt"></i> Незеритовая броня + 15000 монет</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKey('vip_key', 250, 325, 1)">
+                        <i class="fab fa-telegram"></i> Купить за 325 ⭐
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KITS CATEGORY -->
+        <div id="kits-category" class="category">
+            <h2 class="section-title"><i class="fas fa-box-open"></i> Киты</h2>
+            <div class="products-grid">
+                <div class="product-card kit-card">
+                    <div class="product-icon">🗡️</div>
+                    <h3>КИТ ВОИН</h3>
+                    <div class="price">30 ₽ <span class="stars-price">(39 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-sword"></i> Алмазный меч</li>
+                        <
+
+
+li><i class="fas fa-shield-alt"></i> Щит + железная броня</li>
+                        <li><i class="fas fa-apple-alt"></i> 3 золотых яблока</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKit('warrior', 30, 39)">
+                        <i class="fab fa-telegram"></i> Купить за 39 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card kit-card">
+                    <div class="product-icon">🏹</div>
+                    <h3>КИТ ЛУЧНИК</h3>
+                    <div class="price">30 ₽ <span class="stars-price">(39 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-bow"></i> Лук с силой III</li>
+                        <li><i class="fas fa-star"></i> 34 спектральных стрелы</li>
+                        <li><i class="fas fa-heart"></i> 42 стрелы исцеления</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKit('archer', 30, 39)">
+                        <i class="fab fa-telegram"></i> Купить за 39 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card kit-card">
+                    <div class="product-icon">🧪</div>
+                    <h3>КИТ ЗЕЛЬЕВАР</h3>
+                    <div class="price">50 ₽ <span class="stars-price">(65 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-flask"></i> 3 зелья силы + скорости + лечения</li>
+                        <li><i class="fas fa-leaf"></i> 15 ингредиентов каждого вида</li>
+                        <li><i class="fas fa-fire"></i> 20 огненного порошка</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKit('alchemist', 50, 65)">
+                        <i class="fab fa-telegram"></i> Купить за 65 ⭐
+                    </button>
+                </div>
+
+                <div class="product-card kit-card legendary">
+                    <div class="product-icon">👑</div>
+                    <h3>ЛЕГЕНДАРНЫЙ КИТ</h3>
+                    <div class="price">200 ₽ <span class="stars-price">(260 ⭐)</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-dragon"></i> Незеритовый меч (острота IV)</li>
+                        <li><i class="fas fa-chess-queen"></i> Полная незеритовая броня</li>
+                        <li><i class="fas fa-apple-alt"></i> Золотые яблоки + тотем</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyKit('legendary', 200, 260)">
+                        <i class="fab fa-telegram"></i> Купить за 260 ⭐
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Window -->
+        <div id="payment-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-header">
+                    <i class="fab fa-telegram"></i>
+                    <h2>Оплата Telegram Stars</h2>
+                </div>
+                <div id="payment-info" class="payment-info"></div>
+                <div class="payment-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Нажми кнопку ниже</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Оплати в Telegram боте</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Получи товар мгновенно</div>
+                    </div>
+                </div>
+                <button id="telegram-pay-btn" class="telegram-pay-btn" onclick="payWithTelegram()">
+                    <i class="fab fa-telegram"></i> Оплатить
+
+
+через Telegram
+                </button>
+                <div class="payment-note">
+                    <i class="fas fa-info-circle"></i>
+                    Оплата происходит через Telegram Stars. Убедись, что у тебя есть звёзды на балансе.
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification"></div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>⚔️ Mafia Economy | Все права защищены</p>
+                <p>📞 Поддержка: <span class="contact" onclick="window.open('https://t.me/mafia_support')">@mafia_support</span></p>
+                <p><i class="fab fa-telegram"></i> Оплата Telegram Stars — безопасно и мгновенно!</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
